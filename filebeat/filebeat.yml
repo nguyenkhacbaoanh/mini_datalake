@@ -1,0 +1,23 @@
+filebeat.inputs:
+- type: log
+  paths:
+    - /apache-logs/access.log
+  tags:
+    - testenv
+    - apache_access
+  fields:
+    apache: true
+  fields_under_root: true
+
+- type: log
+  paths:
+    - /apache-logs/error.log
+  tags:
+    - testenv
+    - apache_error
+  document_type: apache_error
+  fields_under_root: true
+
+output.kafka:
+  hosts: ["kafka1:9092"]
+  topic: 'log'

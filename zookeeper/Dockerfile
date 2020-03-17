@@ -1,0 +1,3 @@
+ARG ZOO_VERSION
+
+FROM elevy/zookeeper:${ZOO_VERSION}
