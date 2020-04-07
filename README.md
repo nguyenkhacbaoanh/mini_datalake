@@ -10,5 +10,4 @@ docker-compose -f docker-compose.yml up -d
 - kibana: localhost:5601
 
 username: elastic
-
 userpassword: changeme

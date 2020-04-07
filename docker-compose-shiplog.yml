@@ -1,0 +1,34 @@
+version: '3.7'
+
+services:
+  filebeat:
+    build:
+      context: filebeat/
+      args:
+        ELK_VERSION: $ELK_VERSION
+    volumes:
+      # - type: bind
+      #   source: ./filebeat/filebeat.yml
+      #   target: /usr/share/filebeat/filebeat.yml
+      - "./filebeat/filebeat.yml:/usr/share/filebeat/filebeat.yml:ro"
+      - "./apache-logs:/apache-logs"
+    networks:
+      - elk
+    depends_on:
+      - apache
+      - kafka1
+      # - kafka2
+      # - kafka3
+
+  apache:
+    image: lzrbear/docker-apache2-ubuntu
+    volumes:
+      - "./apache-logs:/var/log/apache2"
+    ports:
+      - "8888:80"
+    depends_on:
+      - logstash
+
+networks:
+  elk:
+    driver: bridge
